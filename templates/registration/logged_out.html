@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+Выход
+{% endblock title %}
+{% block content %}
+<div class="" style="height: calc(100vh - 160px);">
+    <h1 class="mb-4">Привет{% if user.is_authenticated %}, {{ user.username }}{% endif%}! <br> Добро пожаловать в
+        магазин кухонной бытовой техники!</h1>
+    <img class="d-block m-auto w-50" src="{% static 'img/hi.jpg' %}">
+</div>
+{% endbloc
+{% endblock content %}
+

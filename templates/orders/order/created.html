@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Оформление заказа
+{% endblock title %}
+{% block content %}
+    <h1 class="mb-4 text-center">Спасибо!</h1>
+    <h5 class="text-center text-black">
+        <div class="mb-2">Ваш заказ успешно оформлен,</div>
+        <div class="mb-5">номер заказа: {{ order.id }}, <br> дата заказа: {{ order.created }}.</div>
+    </h5>
+{% endblock content %}

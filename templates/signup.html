@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block title %}
+    Регистрация
+{% endblock title %}
+{% block form %}
+    <form class="form-signin w-25 m-auto text-center d-block" method="post">
+        {% csrf_token %}
+        <h1 class="mb-4">Регистрация</h1>
+        {% render_field form.username class="form-control w-100 mb-4 text-center" placeholder="Логин"%}
+        <div class="error">{{ form.username.errors.as_ul }}</div>
+        {% for error in form.username.errors %}
+        {% blocktrans %}
+        <div class="error">{{ error }}</div>
+        {% endblocktrans %}
+        {% endfor %}
+
+        {% render_field form.password1 class="form-control w-100 mb-4 text-center" placeholder="Пароль" %}
+        <div class="error">{{ form.password1.errors.as_ul }}</div>
+        {% for error in form.password1.errors %}
+        {% blocktrans %}
+        <div class="error">{{ error }}</div>
+        {% endblocktrans %}
+        {% endfor %}
+
+        {% render_field form.password2 class="form-control w-100 mb-2 text-center" placeholder="Подтвердите пароль" %}
+        {% for error in form.password2.errors %}
+        {% blocktrans %}
+        <div class="error">{{ error }}</div>
+        {% endblocktrans %}
+        {% endfor %}
+
+        <button class="btn btn-lg btn-secondary mt-4 w-100 fw-semibold btn-log pt-1 pb-2" type="submit">
+            создать
+        </button>
+    </form>
+{% endblock form %}

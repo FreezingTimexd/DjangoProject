@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Профиль
+{% endblock title %}
+{% block content %}
+    <div class="px-5">
+        {% with total_items=order_history_items|length %}
+        {% if total_items > 0 %}
+        <h1 class="mb-4">Заказ №{{ order.id }} от {{ order.updated }}</h1>
+        {%  for item in order_history_items %}
+        {% with product=item.product %}
+        <div class="row d-flex align-items-center text-center mb-3">
+            <div class="col-3">
+                 <a href="{{ product.get_absolute_url }}">
+                     <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/hello.jpg' %} {% endif %}"
+                          class="object-fit-cover border rounded" style="width: 200px; height: 200px;">
+                 </a>
+            </div>
+            <div class="col">
+                <a href="{{ product.get_absolute_url }}" class="text-decoration-none hover-link fw-semibold">
+                    {{ item.product}}
+                </a>
+            </div>
+            <div class="col-2">
+                {{ item.quantity}} шт
+            </div>
+            <div class="col-2">
+                {{ item.get_cost}} рублей
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+        <div class="text-center mt-5 col-6 m-auto">
+            <h5 class="mb-4">
+                <div class="row mb-3">
+                    <div class="col text-start">товары ({{ total_items }})</div>
+                    <div class="col text-end">{{ order.get_total_cost_without_discount }} рублей</div>
+                </div>
+                <div class="row mb-3">
+                    {% if order.promocode %}
+                    <div class="col text-start">{{ order.promocode.code }}</div>
+                    <div class="col text-end">-{{ order.promocode.discount|floatformat:"2" }} рублей</div>
+                    {% else %}
+                    <div class="col text-start">скидка</div>
+                    <div class="col text-end">0 рублей</div>
+                    {% endif %}
+                </div>
+                <div class="row mb-3">
+                    <div class="col text-start">итого</div>
+                    <div class="col text-end">{{ order.get_total_cost }} ₽</div>
+                </div>
+            </h5>
+        </div>
+        {% else %}
+        <h1 class="mb-4">заказ пуст</h1>
+        {% endif %}
+        {% endwith %}
+    </div>
+{% endblock content %}

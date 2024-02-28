@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Поиск заказов
+{% endblock title %}
+{% block content %}
+    {% if list_of_all_orders.count == 0 %}
+    <h1 class="mb-4">Список заказов пуст</h1>
+    {% else %}
+    <h1 class="mb-4">Список заказов для {{ list_of_all_orders.0.order.user.username }}</h1>
+<br>
+    <table class="table text-center mb-5 m-auto text-black">
+        <thead class="text-capitalize">
+            <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Продукт</th>
+                <th scope="col">Итоговая стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in list_of_all_orders %}
+            <tr>
+                <th scope="row">{{ order.order }}</th>
+                <td>{{ order.product }}</td>
+                <td>{{ order.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock content %}

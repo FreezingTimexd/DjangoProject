@@ -1,0 +1,21 @@
+h1 {
+    color: #6D1203;
+    text-align: center;
+}
+
+.hello {
+    display: block;
+    margin: 0 auto;
+    max-height: 500px;
+}
+
+.div1{
+     display: inline-block;
+}
+
+.div2{
+    margin:0 auto;
+    width: 200px;
+}
+
+

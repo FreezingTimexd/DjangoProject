@@ -1,0 +1,156 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+Профиль
+{% endblock title %}
+{% block content %}
+<h1 class="mb-4">Профиль</h1>
+<div class="d-flex justify-between mb-5">
+    <div class="card w-50 m-auto mt-0">
+        <div class="card-body">
+            <h5 class="card-title text-center border-bottom pb-3">Информация о пользователе</h5>
+            <div class="card-text mt-3">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th class="fw-light">Логин</th>
+                        <td class="text-end">{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Имя</th>
+                        <td class="text-end">{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Фамилия</th>
+                        <td class="text-end">{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Email</th>
+                        <td class="text-end">{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Город</th>
+                        <td class="text-end">{{ user.profile.city }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Адрес</th>
+                        <td class="text-end">{{ user.profile.address }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-cancel pt-1 pb-2 w-100 mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Изменить
+            </button>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-delete pt-1 pb-2 w-75 mb-2" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                Выйти
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body px-2 py-3 text-center">
+                            Выйти из личного кабинета?
+                        </div>
+                        <div class="modal-footer border-0 d-flex justify-content-between">
+                            <button type="button" class="btn btn-signup pt-1 pb-2" data-bs-dismiss="modal">Отмена
+                            </button>
+                            <a href="{% url 'logout' %}" class="btn btn-delete-2 pt-1 pb-2">
+                                Выйти из профиля
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="collapse w-50 m-auto ms-4" id="collapseExample">
+        <div class="card card-body ">
+            <form method="post" enctype="multipart/form-data" class="text-center">
+                {% csrf_token %}
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th class="fw-light">Логин</th>
+                        <td class="text-end">{{ user_form.username }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Имя</th>
+                        <td class="text-end">{{ user_form.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Фамилия</th>
+                        <td class="text-end">{{ user_form.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Email</th>
+                        <td class="text-end">{{ user_form.email }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Город</th>
+                        <td class="text-end">{{ profile_form.city }}</td>
+                    </tr>
+                    <tr>
+                        <th class="fw-light">Адрес</th>
+                        <td class="text-end">{{ profile_form.address }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between">
+                    <a href="" class="btn btn-signup pt-1 pb-2">
+                        Отмена
+                    </a>
+                    <button type="submit" class="btn btn-success pt-1 pb-2 text-light btn-buy">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        {% with total_items=order_history|length %}
+        {% if total_items > 0 %}
+        <h5 class="card-title text-center border-bottom pb-3">История заказов</h5>
+        <div class="card-text mt-3">
+            <table class="table table-hover table-borderless text-center">
+                <thead>
+                <tr>
+                    <th scope="col">номер заказа</th>
+                    <th scope="col">общая стоимость</th>
+                    <th scope="col">статус</th>
+                    <th scope="col">дата заказа</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in order_history %}
+                <tr onclick="window.location='{% url 'profile_history_detail' order.id %}'">
+                    <th scope="row">{{ order.id }}</th>
+                    <td>{{ order.get_total_cost }} рублей</td>
+                    <td>
+                        {% if order.paid == False %}
+                        не оплачен
+                        {% else %}
+                        оплачен
+                        {% endif %}
+                    </td>
+                    <td>{{ order.created }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <h5 class="card-title text-center ">История заказов пуста</h5>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+{% endblock content %}

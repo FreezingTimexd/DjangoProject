@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+Заказы
+{% endblock title %}
+{% block content %}
+<h1 class="mb-4">Список всех заказов</h1>
+<form action="{% url 'search' %}" method="GET" class="d-flex col-5 m-auto">
+    {% csrf_token %}
+    <input name="q" type="text" class="form-control" placeholder="Введите логин пользователя">
+    <button type="submit" class="btn pt-1 pb-2 ms-2 btn-refresh">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
+             viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+</form>
+<table class="table text-center mb-5 m-auto text-black">
+    <thead class="text-capitalize">
+    <tr>
+        <th scope="col">Номер заказа</th>
+        <th scope="col">Продукт</th>
+        <th scope="col">Итоговая стоимость</th>
+        <th scope="col">Покупатель</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for order in list_of_all_orders %}
+    <tr>
+        <th scope="row">{{ order.order }}</th>
+        <td>{{ order.product }}</td>
+        <td>{{ order.price }}</td>
+        <td>{{ order.order.user }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock content %}

@@ -1,0 +1,115 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    Корзина
+{% endblock title %}
+{% block content %}
+{% with total_items=cart|length %}
+{% if total_items > 0 %}
+<h1 class="mb-4">Корзина</h1>
+<div class="px-5">
+    <div class="mb-5">
+        {% for item in cart %}
+        {% with product=item.product %}
+        <div class="row d-flex align-items-center text-center mb-3">
+            <div class="col-3">
+                 <a href="{{ product.get_absolute_url }}">
+                     <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/hello.jpg' %} {% endif %}"
+                          class="object-fit-cover border rounded" style="width: 200px; height: 200px;">
+                 </a>
+            </div>
+            <div class="col-2">
+                {{ product.brand }}
+            </div>
+            <div class="col">
+                <a href="{{ product.get_absolute_url }}" class="text-decoration-none hover-link fw-semibold">
+                    {{ product.name }}
+                </a>
+            </div>
+            <div class="col-2">
+                <form action="{% url 'cart_add' product.id %}" method="post" class="d-flex">
+                    {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.update }}
+                    {% csrf_token %}
+                </form>
+            </div>
+            <div class="col-2">
+                {{ item.total_price }} рублей
+            </div>
+            <div class="col-1 text-end">
+                <button type="button" class="btn btn-delete pt-1 pb-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.id }}">
+                    Удалить
+                </button>
+                <form method="post" action="">
+                {% csrf_token %}
+                    <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1" aria-labelledby="exampleModal{{ product.id }}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body px-2 py-3 text-center">
+                                    Удалить {{ product.name }} из корзины?
+                                </div>
+                                <div class="modal-footer border-0 d-flex justify-content-between">
+                                    <button type="button" class="btn btn-signup pt-1 pb-2" data-bs-dismiss="modal">отмена</button>
+                                    <a href="{% url 'cart_remove' product.id %}" class="btn btn-delete-2 pt-1 pb-2">
+                                        Удалить
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+
+    <div class="text-center mb-4 col-8 m-auto">
+        <h5 class="mb-4">
+            <div class="row mb-3">
+                <div class="col text-start">Стоимость товаров ({{ total_items }})</div>
+                <div class="col text-end">{{ cart.get_total_price }} рублей</div>
+            </div>
+        </h5>
+        <form action="{% url 'apply' %}" method="post" class="d-flex mb-5">
+            {% csrf_token %}
+            {% render_field promocode_apply_form.code class="form-control text-center" placeholder="Введите промокод" %}
+        </form>
+        {% if user.is_authenticated %}
+        <a href="{% url 'order_create' %}">
+            <button type="button" class="btn btn-success pt-1 pb-2 w-100 fw-semibold text-light btn-buy">Оформить заказ</button>
+        </a>
+        {% else %}
+        <button type="button" class="btn btn-success pt-1 pb-2 w-100 fw-semibold text-light btn-buy"
+                data-bs-toggle="modal" data-bs-target="#exampleModal">Оформить заказ</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body px-2 py-3 text-center">
+                            Для покупки {{ product.name }} необходимо авторизоваться
+                        </div>
+                        <div class="modal-footer border-0 d-flex justify-content-between">
+                            <button type="button" class="btn btn-signup pt-1 pb-2" data-bs-dismiss="modal">Отмена
+                            </button>
+                            <a href="{% url 'login' %}">
+                                <button type="button" class="btn btn-secondary btn-log pt-1 pb-2">войти</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+    <h1 class="text-center">Корзина пуста</h1>
+{% endif %}
+{% endwith %}
+{% endblock content %}

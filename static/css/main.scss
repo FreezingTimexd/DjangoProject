@@ -1,0 +1,158 @@
+// highlight color - pink
+$primary: #001dd7;
+
+// menu link - light brown
+$secondary: #e57b1b;
+// active menu link - dark brown
+$dark: #99673D;
+
+// buy btn - green
+$success: #ff7f50;
+
+// main text - dark grey
+$black: #5A6A6A;
+
+// delete btn - red
+$delete: #993D3D;
+
+
+$light-blue-grey: #5A6A6A;
+$dark-blue-grey: #708E8E;
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+.card:hover {
+    outline: solid rgba($primary, 0.15) 5px;
+    border-color: rgba($primary, 0.5);
+}
+
+.btn-cancel {
+    color: $secondary;
+    border-color: rgba($secondary, 0.4);
+}
+
+.btn-cancel:hover {
+    color: white;
+    background-color: $secondary;
+    outline: solid rgba($secondary, 0.15) 5px;
+    border-color: rgba($secondary, 0.4);
+}
+
+.btn-do {
+    color: white;
+    background-color: rgba($success, 0.4);
+}
+
+.btn-do:hover {
+    color: white;
+    background-color: $success;
+    outline: solid rgba($success, 0.15) 5px;
+}
+
+
+
+.btn-log:hover {
+    outline: solid rgba($secondary, 0.15) 5px;
+    border-color: rgba($dark, 0.4);
+}
+
+.btn-signup {
+    color: $secondary;
+}
+
+.btn-signup:hover {
+    color: $dark;
+    background-color: white;
+    outline: solid rgba($secondary, 0.15) 5px;
+    border-color: rgba($dark, 0.4);
+}
+
+.btn-buy:hover {
+    outline: solid rgba($success, 0.15) 5px;
+    background-color: $success;
+}
+
+.hover-link {
+    color: $light-blue-grey;
+}
+
+.hover-link:hover {
+    color: $dark-blue-grey;
+}
+
+.btn-delete {
+    color: $delete;
+}
+
+.btn-delete:hover {
+    color: white;
+    background-color: $delete;
+    outline: solid rgba($delete, 0.15) 5px;
+    border-color: rgba($delete, 0.5);
+}
+
+.btn-delete-2 {
+    color: white;
+    background-color: rgba($delete, 0.5);
+}
+
+.btn-delete-2:hover {
+    color: white;
+    background-color: $delete;
+    outline: solid rgba($delete, 0.15) 5px;
+    border-color: rgba($delete, 0.5);
+}
+
+.btn-refresh {
+    color: $light-blue-grey;
+}
+
+.btn-refresh:hover {
+    color: $dark-blue-grey;
+    outline: solid rgba($dark-blue-grey, 0.15) 5px;
+    border-color: rgba($dark-blue-grey, 0.5);
+}
+
+.btn-notification::after {
+    display: none;
+}
+
+.nav-tabs .btn-detail.nav-link.active {
+    color:  $dark;
+}
+
+.btn-detail {
+    color:  $secondary;
+}
+
+.btn-close:focus,.btn-close:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+.btn-favorites {
+    background-color: rgba( $primary, 0.5);
+}
+
+.btn-favorites::after {
+    content: url('data:image/svg+xml; utf8,
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"
+         class="bi bi-heart" viewBox="0 0 16 16">
+        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+    </svg>');
+}
+
+.btn-favorites:hover {
+    background-color: $primary;
+    outline: solid rgba($primary, 0.15) 5px;
+    border-color: rgba($primary, 0.5);
+}
+
+.added {
+    background-color: $primary;
+}
+
+.error {
+    color: $delete;
+}

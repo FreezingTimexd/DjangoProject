@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block title %}
+    Вход
+{% endblock title %}
+{% block form %}
+<div class="w-25 m-auto text-center">
+    <form class="form-signin" method="post">
+        {% csrf_token %}
+        <h1 class="mb-4">Вход</h1>
+        {% render_field form.username class="form-control w-100 mb-4 text-center" placeholder="Логин" %}
+        {% render_field form.password class="form-control w-100 mb-2 text-center" placeholder="Пароль" %}
+
+        {% for error in form.non_field_errors %}
+        {% blocktrans %}
+        <div class="error">{{ error }}</div>
+        {% endblocktrans %}
+        {% endfor %}
+
+        <button class="btn btn-lg btn-secondary mt-4 w-100 fw-semibold btn-log pt-1 pb-2" type="submit" id="login_btn">
+            войти
+        </button>
+    </form>
+<!--Registration-->
+    <a href="{% url 'signup' %}">
+        <button class="btn btn-lg mt-4 w-100 fw-semibold btn-signup pt-1 pb-2" type="button">
+            Зарегистрироваться
+        </button>
+    </a>
+</div>
+{% endblock form %}
+

@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    Оформление заказа
+{% endblock title %}
+{% block content %}
+    <h1 class="mb-4">Оформление заказа</h1>
+    <div>
+        <div class="col-5 card" style="margin-left: 525px">
+            <a href="{% url 'cart_detail' %}" class="text-decoration-none">
+                <div class="card-body">
+                    <h5 class="card-title text-dark text-center mb-3">Ваш заказ</h5>
+                    <ul class="list-group">
+                        {% for item in cart %}
+                        <li class="list-group-item border border-0 text-black">
+                            <div class="row">
+                                <div class="col">{{ item.product.name }}({{ item.quantity }})</div>
+                                <div class="col text-end">{{ item.total_price }} рублей</div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% if cart.promocode %}
+                        <li class="list-group-item border border-0 text-black">
+                            <div class="row">
+                                <div class="col">{{ cart.promocode.code }}({{ cart.promocode.discount }}%)</div>
+                                <div class="col text-end">-{{ cart.get_discount|floatformat:"2" }} рублей</div>
+                            </div>
+                        </li>
+                        {% endif %}
+                        <hr>
+                        <li class="list-group-item border border-0 text-black">
+                            <h5 class="row">
+                                <div class="col">итого</div>
+                                <div class="col text-end">{{ cart.get_total_price_after_discount|floatformat:"2" }} рублей</div>
+                            </h5>
+                        </li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+        <div class="col-10" style="margin-left: 100px">
+            <form action="." method="post" class="text-capitalize">
+                {% csrf_token %}
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th class="fw-light">имя</th>
+                            <td class="text-end">{{ user.first_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fw-light">фамилия</th>
+                            <td class="text-end">{{ user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fw-light">email</th>
+                            <td class="text-end " style="text-transform: lowercase" >{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fw-light">город</th>
+                            <td class="text-end">{{ form.city }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fw-light">адрес</th>
+                            <td class="text-end">{{ form.address }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-success pt-1 pb-2 w-100 fw-semibold text-light mt-4 btn-buy">
+                    Оплатить заказ
+                </button>
+            </form>
+        </div>
+
+    </div>
+{% endblock content %}

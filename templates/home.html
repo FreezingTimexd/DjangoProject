@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Главная
+{% endblock title %}
+{% block content %}
+<div class="" style="height: calc(100vh - 160px);">
+    <h1 class="text-center">Привет{% if user.is_authenticated %}, {{ user.username }}{% endif%}! <br> Рады видеть тебя в лучшем магазине деталей на Hyundai!</h1>
+    <img class="d-block m-auto h-75" src="{% static 'img/salam.jpg' %}">
+</div>
+{% endblock content %}
